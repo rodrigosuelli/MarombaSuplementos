@@ -127,15 +127,17 @@ $stmt->execute();
         <nav aria-label="Page navigation example">
             <ul class="pagination pagination-md justify-content-center">
                 <li class="<?php if($pageno <= 1) echo 'disabled'; else echo 'page-item'; ?>">
-                    <a class="page-link" id="pagelink" href="<?php if($pageno <= 1){ echo '#'; } 
+                    <a style="background-color: #4b0d77" id="pagelink" class="page-link" href="<?php if($pageno <= 1){ echo '#'; }
     else { echo "?pageno=".($pageno - 1); } ?>#tit">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="?pageno=1#tit">1</a></li>
-                <li class="page-item"><a class="page-link" href="?pageno=2#tit">2</a></li>
-                <li class="page-item"><a class="page-link" href="?pageno=3#tit">3</a></li>
-                <li class="page-item"><a class="page-link" href="?pageno=4#tit">4</a></li>
-                <li class="page-item"><a class="page-link" href="?pageno=5#tit">5</a></li>
-                <li class="page-item"><a class="page-link" href="?pageno=6#tit">6</a></li>
-                <li class="<?php if($pageno <= $total_pages) echo 'disabled'; else echo 'page-item'; ?>"><a
+
+
+                <li class="page-item"><a <?php if ($pageno==1) echo "style=\"background-color: #4b0d77;\""?> class="page-link" href="?pageno=1#tit">1</a></li>
+                <li class="page-item"><a <?php if ($pageno==2) echo "style=\"background-color: #4b0d77;\""?> class="page-link" href="?pageno=2#tit">2</a></li>
+                <li class="page-item"><a <?php if ($pageno==3) echo "style=\"background-color: #4b0d77;\""?> class="page-link" href="?pageno=3#tit">3</a></li>
+                <li class="page-item"><a <?php if ($pageno==4) echo "style=\"background-color: #4b0d77;\""?> class="page-link" href="?pageno=4#tit">4</a></li>
+                <li class="page-item"><a <?php if ($pageno==5) echo "style=\"background-color: #4b0d77;\""?> class="page-link" href="?pageno=5#tit">5</a></li>
+                <li class="page-item"><a <?php if ($pageno==6) echo "style=\"background-color: #4b0d77;\""?> class="page-link" href="?pageno=6#tit">6</a></li>
+                <li class="<?php if($pageno <= $total_pages) echo 'disabled'; else echo 'page-item'; ?>"><a style="background-color: #4b0d77"
                         id="pagelink2" class="page-link"
                         href="<?php if($pageno >= $total_pages){ echo '#'; } else { echo "?pageno=".($pageno + 1); } ?>#tit">Next</a>
                 </li>
