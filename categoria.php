@@ -1,5 +1,6 @@
 <?php
-require_once 'init.php'; 
+require_once 'init.php';
+session_start();
 // pega o ID da URL
 $categoria = isset($_GET['categoria']) ? $_GET['categoria'] : null;
 // valida o ID
@@ -13,7 +14,7 @@ $sql = "SELECT id, nome, preco, quantidade, imagem FROM Produtos WHERE categoria
 $stmt = $PDO->prepare($sql);
 $stmt->bindParam(':categoria', $categoria);
 $stmt->execute();
-
+$Produtos = $stmt->fetch(PDO::FETCH_ASSOC);
 
 ?>
 
@@ -46,48 +47,7 @@ $stmt->execute();
 
 <body>
     <!--HEADER-->
-    <header>
-        <nav class="navbar navbar-expand navbar-light" id="nav">
-            <div class="row align-items-center">
-                <div class="col-2">
-                    <a class="navbar-brand pulse animated" href="index.php" id="logo">
-                        <img src="https://images2.imgbox.com/41/d0/ivqOnSg2_o.png" width="85%"
-                            class="d-inline-block align-top ml-5" alt="logo">
-                    </a>
-                </div>
-
-                <div class="col-6">
-                <form class="form-inline" action="pesquisa.php" method="GET">
-                        <div class="input-group ml-4">
-                            <input name="query" id="search" class="form-control" type="search"
-                                placeholder="Pesquisar produtos" aria-label="Search">
-                            <div class="input-group-append">
-                                <button value="Search" type="submit" class="btn btn-light" id="searchbtn"><a href=""
-                                        id="search-icon"><i class="material-icons md-24">search</i></a>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="col ml-5">
-                    <a id="login" href=""><i class="material-icons md-36">emoji_people</i><b>Faça login</b></a>
-                </div>
-                <div class="col">
-                    <a href="carrinho.php" id="cart"><i class="material-icons md-36">shopping_cart</i></a>
-                </div>
-        </nav>
-        <nav class="navbar navbar-expand navbar-light" id="nav2">
-            <div class="row justify-content-center">
-                <div class="col"><a class="nav-link" href="categoria.php?categoria=Proteínas">Proteínas</a></div>
-                <div class="col"><a class="nav-link" href="categoria.php?categoria=Aminoácidos">Aminoácidos</a></div>
-                <div class="col"><a class="nav-link" href="categoria.php?categoria=Carboidratos">Carboidratos</a></div>
-                <div class="col"><a class="nav-link" href="categoria.php?categoria=Vegetarianos">Vegetarianos</a></div>
-                <div class="col"><a class="nav-link" href="categoria.php?categoria=Vegano">Vegano</a></div>
-                <div class="col"><a class="nav-link" href="categoria.php?categoria=Termogênico">Termogênico</a></div>
-                <div class="col"><a class="nav-link" href="categoria.php?categoria=Vitaminas">Vitaminas</a></div>
-            </div>
-        </nav>
-    </header>
+    <?php require_once("componentes/header.php"); ?>
     <!--CORPO-->
     <div id="owl-demo" class="owl-carousel owl-theme">
 
@@ -138,37 +98,7 @@ $stmt->execute();
 
     </div>
     <!--Footer-->
-    <footer class="py-5 mt-4">
-        <div class="container text-white">
-            <div class="row" id="footer-row">
-                <div class="col-3">
-                    <h6>Produtos</h6>
-                    <ul class="list-group">
-                        <li><a href="categoria.php?categoria=Proteínas">Proteínas</a></li>
-                        <li><a href="categoria.php?categoria=Aminoácidos">Aminoácidos</a></li>
-                        <li><a href="categoria.php?categoria=Carboidratos">Carboidratos</a></li>
-                        <li><a href="categoria.php?categoria=Vegetarianos">Vegetarianos</a></li>
-                        <li><a href="categoria.php?categoria=Vegano">Vegano</a></li>
-                        <li><a href="categoria.php?categoria=Termogênico">Termogênico</a></li>
-                        <li><a href="categoria.php?categoria=Vitaminas">Vitaminas</a></li>
-                    </ul>
-                </div>
-                <div class="col-3 divided">
-                    <h6>Alunos</h6>
-                    <ul class="list-group">
-                        <li>Rodrigo</li>
-                        <li>Eusébio</li>
-                        <li>Lucas</li>
-                        <li>Gabriel Santim</li>
-                    </ul>
-                </div>
-                <div class="col-6 divided">
-                    <h6 class="text-center">Copyright © Maromba Suplementos 2019</h6><br>
-                    <p class="text-center">Todos os direitos reservados.</p>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <?php require_once("componentes/footer.php"); ?>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

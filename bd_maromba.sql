@@ -13,24 +13,31 @@ create table Produtos(
 
 create table Clientes(
     id int unsigned primary key not null auto_increment,
-    nome varchar(30) not null,
-    sobrenome varchar(30) not null,
-    endereco varchar(60),
-    telefone varchar(20),
-    RG varchar(20),
-    CPF varchar(20),
-    email varchar(50),
-    genero enum('m','f') not null,
-    birthdate date
+    nome varchar(100) not null,
+    sobrenome varchar(30),
+    senha varchar(100) not null,
+    email varchar(100) not null,
+    endereco varchar(700) not null,
+    RG varchar(30),
+    CPF varchar(30)
+);
+
+create table ItensPedidos(
+    id_item_pedido int unsigned primary key not null auto_increment,
+    cod_prod int unsigned not null,
+    quantidade int unsigned not null,
+    foreign key (cod_prod) references Produtos(id)
 );
 
 create table Pedidos(
-numero int unsigned primary key not null auto_increment,
-pcodigo int unsigned,
-dtElaboracao date not null,
-foreign key (numero) references Clientes(id),
-foreign key (pcodigo) references Produtos(id)
+    id_pedido int unsigned primary key not null auto_increment,
+    cod_item int unsigned not null,
+    valor_total decimal(9,2) not null,
+    cod_cliente int unsigned not null,
+    foreign key (cod_cliente) references Clientes(id),
+    foreign key (cod_item) references ItensPedidos(id_item_pedido)
 );
+
 
 
 create table Comentarios(
@@ -85,7 +92,7 @@ INSERT INTO `produtos` (`id`, `nome`, `descricao`, `preco`, `quantidade`, `categ
 (37, 'VITAMINA E ULTRA (1490UI) 120 CAPS', '* Não contém quantidades significativas de valor energéticos, carboidratos, proteínas, gorduras totais, gorduras saturadas, gorduras trans e sódio. % Valores diários recomendados com base em uma dieta de 2.000 Kcal ou 8400 KJ. Seus valores diários podem ser maiores ou menores dependendo de suas necessidades energéticas.', '54.00', 50, 'Vitaminas', 'https://www.gsuplementos.com.br/upload/produto/imagem/b_vitamina-e-ultra-1490ui-120-caps-growth-supplements.jpg'),
 (38, 'ANTI-OX 120 CAPS ', 'Alguns nutrientes podem impactar diretamente na sua recuperação. E,como todo bom atleta sabe, esse é um dos momentos mais importantes para a hipertrofia ? tanto para garantir que você tenha a disposição de treinar mais quanto para assegurar que construa melhor os músculos e consiga o tão sonhado aumento de massa muscular. O antioxidante é o melhor amigo do pós-treino. A Growth Supplements entende de todos os aspectos de uma rotina saudável e preparou um produto especial para nossos atletas. O Anti-OX possui nutrientes selecionados para melhorarcada aspecto da sua recuperação depois dos exercícios. Sua rotina não será a mesma com a ajuda desse produto revolucionário. Não fique de fora dessa inovação!', '18.00', 50, 'Vitaminas', 'https://www.gsuplementos.com.br/upload/growth-layout-personalizado/produto/10/product.png'),
 (39, 'ÓLEO DE PEIXE - ÔMEGA 3 (75 SOFTGEL)', 'Nem toda gordura é ruim. Muito pelo contrário, nosso corpo precisa de muitas delas para manter uma rotina saudável. Tudo, é claro, tendo consciência das quantidades e do tipo de gordura que consumimos. O ômega 3 é uma das principais, necessária para diversas funções metabólicas e encontrada frequentemente em peixes, sobretudo os de mares profundos e gelados. As gorduras são importantes também para a absorção das vitaminas lipossolúveis.\r\n\r\nPara garantir uma boa quantidade no seu dia a dia, nada melhor do que contar com produtos com qualidade Growth Supplements. Nosso complemento de ômega 3 possui 75 cápsulas - assim, fica mais fácil assegurar que todos os nutrientes tragam um impacto positivo na rotina.', '22.50', 20, 'Vitaminas', 'https://www.gsuplementos.com.br/upload/growth-layout-personalizado/produto/111/product.png'),
-(40, 'SPIRULINA (75 CÁPSULAS)', 'A Spirulina é um produto a base de cianobactéria, que tem ação funcional e diminui os níveis de colesterol no sangue. Ela atua no corpo e gera uma série de avanços nas funções metabólicas, além de proteger o organismo de doenças e infecções diversas.\r\n\r\nPor conta disso, a Spirulina tem se tornado cada vez mais famosa entre atletas e pessoas que buscam uma vida mais saudável. Ela possui uma série de elementos na sua fórmula natural, que foram passadas para o suplemento, sendo, inclusive, consumida por astronautas, quando estão em viagem pelo espaço.\r\n\r\nO alto índice de proteína, por exemplo, é ideal para manter o organismo forte e saudável. Isso tem feito com que as pessoas se interessem cada vez mais pelo uso desse suplemento, que virou um sucesso em todo o território nacional.', '27.00', 30, 'Vitaminas', 'https://www.gsuplementos.com.br/upload/growth-layout-personalizado/produto/164/produto.png'),
+(40, 'SPIRULINA (75 CÁPSULAS)', 'A Spirulina é um produto a base de cianobactéria, que tem ação funcional e diminui os níveis de colesterol no sangue. Ela atua no corpo e gera uma série de avanços nas funções metabólicas, além de proteger o organismo de doenças e infecções diversas.\r\n\r\nPor conta disso, a Spirulina tem se tornado cada vez mais famosa entre atletas e pessoas que buscam uma vida mais saudável. Ela possui uma série de componentes na sua fórmula natural, que foram passadas para o suplemento, sendo, inclusive, consumida por astronautas, quando estão em viagem pelo espaço.\r\n\r\nO alto índice de proteína, por exemplo, é ideal para manter o organismo forte e saudável. Isso tem feito com que as pessoas se interessem cada vez mais pelo uso desse suplemento, que virou um sucesso em todo o território nacional.', '27.00', 30, 'Vitaminas', 'https://www.gsuplementos.com.br/upload/growth-layout-personalizado/produto/164/produto.png'),
 (41, 'ÓLEO DE SEMENTE DE UVA (75CAPS) ', 'Os melhores ingredientes para uma boa rotina de treino podem estar presentes até mesmo nas coisas mais simples. É o caso do óleo de semente da uva, que contém uma série de nutrientes que impactam diretamente sobre seu treino e sua saúde. Até mesmo quem não treina sentirá o impacto positivo desse ingrediente na rotina. Ele é um excelente anti-inflamatório e pode ser útil para prevenir trombose, reduzir o colesterol e atuar na dilatação dos vasos sanguíneos. Na Growth Supplements você encontra o produto em 75 cápsulas concentradas com a quantidade que você precisa para uma rotina ainda mais saudável. Tudo isso com a segurança de um produto aprovado pelos testes mais rigorosos da Anvisa e com matéria-prima de primeira.', '19.80', 20, 'Vitaminas', 'https://www.gsuplementos.com.br/upload/growth-layout-personalizado/produto/113/product.png'),
 (42, 'POWER ARGININE (120CAPS)', 'Com a Arginina você garante resultados ainda melhores para as sessões de treino. Ela é um aminoácido que contribui muito para a obtenção de melhores resultados, especialmente para quem está focado na hipertrofia.\r\n\r\nCombinada sempre com uma dieta de ingestão de proteínas e carboidratos, a arginina garante impactos positivos cada vez maiores na rotina de exercícios. Além de auxiliar no processo de recuperação muscular, ela também é usada na produção de óxido nítrico no corpo. O resultado é um aumento do calibre dos vasos sanguíneos, produzindo ainda mais resultados.', '27.00', 20, 'Aminoácidos', 'https://www.gsuplementos.com.br/upload/growth-layout-personalizado/produto/121/produto.png'),
 (43, 'Amino Powder 10', 'Amino Power é o suplemento de aminoácidos mais completo que você vai ver! Contando com os principais aminoácidos, o Amino power é perfeito para completar a dieta de idosos que não conseguem comer carne, por exemplo, e crianças com restrição na alimentação, além de um praticante de atividade física. Muitas vezes, as dietas, por melhores que sejam, ainda precisam de complementos.\r\n\r\nPodendo ser diluído na água, o Amino Power é ideal para ser consumido em refeições que não possuam a quantidade ideal de proteína, que pode ser encontrada na carne, ovo, frango e peixe. Pode ser ingerida também durante o dia, cerca de 45 minutos antes dos treinos ou logo depois de praticar atividades físicas.', '70.00', 50, 'Aminoácidos', 'https://www.gsuplementos.com.br/upload/growth-layout-personalizado/produto/1021/product.png'),

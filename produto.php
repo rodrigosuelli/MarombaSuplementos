@@ -1,5 +1,6 @@
 <?php
-require_once 'init.php'; 
+require_once 'init.php';
+session_start();
 // pega o ID da URL
 $id = isset($_GET['id']) ? (int) $_GET['id'] : null;
 // valida o ID
@@ -17,7 +18,7 @@ $Produtos = $stmt->fetch(PDO::FETCH_ASSOC);
 // se o método fetch() não retornar um array, significa que o ID não corresponde 
 // a um usuário válido
 //CONVERTER PONTO EM VÍRGULA
-$Produtos['preco'] = str_replace('.', ',', $Produtos['preco']); ?>
+$preco_convertido = str_replace('.', ',', $Produtos['preco']); ?>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -53,50 +54,7 @@ $Produtos['preco'] = str_replace('.', ',', $Produtos['preco']); ?>
 
 <body>
     <!--HEADER-->
-    <header>
-        <nav class="navbar navbar-expand navbar-light" id="nav">
-            <div class="row align-items-center">
-                <div class="col-2">
-                    <a class="navbar-brand pulse animated" href="index.php" id="logo">
-                        <img src="https://images2.imgbox.com/41/d0/ivqOnSg2_o.png" width="85%"
-                            class="d-inline-block align-top ml-5" alt="logo">
-                    </a>
-                </div>
-
-                <div class="col-6">
-                <form class="form-inline" action="pesquisa.php" method="GET">
-                        <div class="input-group ml-4">
-                            <input name="query" id="search" class="form-control" type="search"
-                                placeholder="Pesquisar produtos" aria-label="Search">
-                            <div class="input-group-append">
-                                <button value="Search" type="submit" class="btn btn-light" id="searchbtn"><a href=""
-                                        id="search-icon"><i class="material-icons md-24">search</i></a>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="col ml-5">
-                    <a id="login" href=""><i class="material-icons md-36">emoji_people</i><b>Faça login</b></a>
-                </div>
-                <div class="col">
-                    <a href="carrinho.php" id="cart"><i class="material-icons md-36">shopping_cart</i></a>
-                </div>
-        </nav>
-        <nav class="navbar navbar-expand navbar-light" id="nav2">
-            <div class="row justify-content-center">
-
-                <div class="col"><a class="nav-link" href="categoria.php?categoria=Proteínas">Proteínas</a></div>
-                <div class="col"><a class="nav-link" href="categoria.php?categoria=Aminoácidos">Aminoácidos</a></div>
-                <div class="col"><a class="nav-link" href="categoria.php?categoria=Carboidratos">Carboidratos</a></div>
-                <div class="col"><a class="nav-link" href="categoria.php?categoria=Vegetarianos">Vegetarianos</a></div>
-                <div class="col"><a class="nav-link" href="categoria.php?categoria=Vegano">Vegano</a></div>
-                <div class="col"><a class="nav-link" href="categoria.php?categoria=Termogênico">Termogênico</a></div>
-                <div class="col"><a class="nav-link" href="categoria.php?categoria=Vitaminas">Vitaminas</a></div>
-
-            </div>
-        </nav>
-    </header>
+    <?php require_once("componentes/header.php"); ?>
     <!--CORPO-->
     <div class="mt-3 container-fluid" id="card-produto">
         <div class="card semborda mb-5">
@@ -112,10 +70,27 @@ $Produtos['preco'] = str_replace('.', ',', $Produtos['preco']); ?>
                     <div class="ui divider"></div>
                     <div class="ui massive star rating" data-rating="4" data-max-rating="5"></div>
                     <h5 class="mt-3">Vendido e entregue por <b id="roxo">Maromba Suplementos</b></h5>
-                    <h4 class="mt-3">Por apenas: <b class="text-success">R$ <?php echo $Produtos['preco']?></b> à vista</h4>
-                    <a id="a-comprar" href="form-carrinho.php?id=<?php echo $Produtos['id']?>"><button id="comprar" class="mt-4 btn btn-success btn-lg"><b>COMPRAR</b></button></a>
+                    <h4 class="mt-3 mb-3">Por apenas: <b class="text-success">R$ <?php echo $preco_convertido?></b> à vista</h4>
+
+                    <form action="form-carrinho.php" method="get">
+                    <div class="form-row align-items-center">
+                    <div class="form-group col-sm-2">
+                    <label for="quantidade">Quantidade: </label>
+                    <input required="required" class="form-control" type="number" value="1" min="1" max="10" name="qtd_pedida" id="qtd_pedida">
+                    </div>
+                    <div class="form-group col">
+                    
+                    <!-- <a id="a-comprar" href="form-carrinho.php?id=<?php //echo $Produtos['id']?>">
+                     <button id="comprar" class="mt-4 btn btn-success btn-lg">
+                    <b>COMPRAR</b>
+                    </button></a> -->
+                    <input type="hidden" name="id" id="id" value="<?php echo $id?>">
+                        <input type="hidden" name="preco" id="preco" value="<?php echo $Produtos['preco']?>">
+                    <input class="form-control mt-4 ml-2 btn btn-success btn-lg" id="a-comprar" type="submit" value="COMPRAR">
+                    </div>
                 </div>
-          
+                </div>
+                </form>
             </div>
         </div>   
         <!--DESCRIÇÃO-->
@@ -130,39 +105,7 @@ $Produtos['preco'] = str_replace('.', ',', $Produtos['preco']); ?>
     </div>
 
     <!--Footer-->
-    <footer class="py-5 mt-4">
-        <div class="container text-white">
-            <div class="row" id="footer-row">
-                <div class="col-3">
-                    <h6>Produtos</h6>
-                    <ul class="list-group">
-
-                        <li><a href="categoria.php?categoria=Proteínas">Proteínas</a></li>
-                        <li><a href="categoria.php?categoria=Aminoácidos">Aminoácidos</a></li>
-                        <li><a href="categoria.php?categoria=Carboidratos">Carboidratos</a></li>
-                        <li><a href="categoria.php?categoria=Vegetarianos">Vegetarianos</a></li>
-                        <li><a href="categoria.php?categoria=Vegano">Vegano</a></li>
-                        <li><a href="categoria.php?categoria=Termogênico">Termogênico</a></li>
-                        <li><a href="categoria.php?categoria=Vitaminas">Vitaminas</a></li>
-
-                    </ul>
-                </div>
-                <div class="col-3 divided">
-                    <h6>Alunos</h6>
-                    <ul class="list-group">
-                        <li>Rodrigo</li>
-                        <li>Eusébio</li>
-                        <li>Lucas</li>
-                        <li>Gabriel Santim</li>
-                    </ul>
-                </div>
-                <div class="col-6 divided">
-                    <h6 class="text-center">Copyright © Maromba Suplementos 2019</h6><br>
-                    <p class="text-center">Todos os direitos reservados.</p>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <?php require_once("componentes/footer.php"); ?>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
