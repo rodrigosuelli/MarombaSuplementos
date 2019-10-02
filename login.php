@@ -6,7 +6,7 @@ session_start();
 $email=trim($_POST['email']);
 $senha=trim($_POST['senha']);
 
-$sql = "SELECT * FROM Clientes where email='$email'";
+$sql = "SELECT * FROM Clientes where email='$email' and senha='$senha'";
 $stmt = $PDO->prepare($sql);
 $stmt->execute();
 
