@@ -20,6 +20,12 @@ $total = $stmt_count->fetchColumn();
 // seleciona os registros
 $stmt = $PDO->prepare($sql);
 $stmt->execute();
+
+//VERIFICAR SE ESTÁ LOGADO
+if (!$_SESSION['logado']['email']=="rodrigosuelli@gmail.com"){
+    echo "<script>alert('Email/senha incorretos ou usuario nao cadastrado!')</script>";
+    echo "<script>window.location = 'index.php'</script>";
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">

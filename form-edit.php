@@ -1,6 +1,12 @@
 <?php
 require 'init.php';
 session_start();
+
+//VERIFICAR SE ESTÁ LOGADO
+if (!$_SESSION['logado']['email']=="rodrigosuelli@gmail.com"){
+    echo "<script>alert('Email/senha incorretos ou usuario nao cadastrado!')</script>";
+    echo "<script>window.location = 'index.php'</script>";
+}
 // pega o ID da URL
 $id = isset($_GET['id']) ? (int) $_GET['id'] : null;
 // valida o ID
